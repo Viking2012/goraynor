@@ -1,35 +1,26 @@
-package records
+package organizr
 
 import (
 	"sort"
 	"time"
+
+	"github.com/Viking2012/goraynor/src/structs"
 )
 
 const layout = "2006-01-02"
 
-// A PriceRecord contains all of the information on individual purchases and their prices to identify outliers
-type PriceRecord struct {
-	Uuid               int64
-	ProductID          string
-	CustomerID         string
-	PurchaseDate       time.Time
-	DocumentNumber     int64
-	DocumentLineNumber int64
-	Price              float64
-}
-
 // implementation basics from https://pkg.go.dev/sort#example-package-SortKeys
 // lessFunc is the type of a "less" function that defines the ordering of its PurchaseRecord arguments.
-type lessFunc func(p1, p2 *PriceRecord) bool
+type lessFunc func(p1, p2 *structs.PriceRecord) bool
 
 // multiSorter implements the Sort interface, sorting the changes within.
 type multiSorter struct {
-	records []PriceRecord
+	records []structs.PriceRecord
 	less    []lessFunc
 }
 
 // Sort sorts the argument slice according to the less functions passed to OrderedBy.
-func (ms *multiSorter) Sort(records []PriceRecord) {
+func (ms *multiSorter) Sort(records []structs.PriceRecord) {
 	ms.records = records
 	sort.Sort(ms)
 }
@@ -79,31 +70,31 @@ func (ms *multiSorter) Less(i, j int) bool {
 	return ms.less[k](p, q)
 }
 
-func byUuid(p1, p2 *PriceRecord) bool {
+func byUuid(p1, p2 *structs.PriceRecord) bool {
 	return p1.Uuid < p2.Uuid
 }
 
-func byProduct(p1, p2 *PriceRecord) bool {
+func byProduct(p1, p2 *structs.PriceRecord) bool {
 	return p1.ProductID < p2.ProductID
 }
 
-func byCustomer(p1, p2 *PriceRecord) bool {
+func byCustomer(p1, p2 *structs.PriceRecord) bool {
 	return p1.CustomerID < p2.CustomerID
 }
 
-func byDate(p1, p2 *PriceRecord) bool {
+func byDate(p1, p2 *structs.PriceRecord) bool {
 	return p1.PurchaseDate.Before(p2.PurchaseDate)
 }
 
-func byDocumentNumber(p1, p2 *PriceRecord) bool {
+func byDocumentNumber(p1, p2 *structs.PriceRecord) bool {
 	return p1.DocumentNumber < p2.DocumentNumber
 }
 
-func byDocumentLineNumber(p1, p2 *PriceRecord) bool {
+func byDocumentLineNumber(p1, p2 *structs.PriceRecord) bool {
 	return p1.DocumentLineNumber < p2.DocumentLineNumber
 }
 
-func byPrice(p1, p2 *PriceRecord) bool {
+func byPrice(p1, p2 *structs.PriceRecord) bool {
 	return p1.Price < p2.Price
 }
 

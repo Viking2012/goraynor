@@ -1,12 +1,14 @@
-package records
+package organizr
 
 import (
 	"errors"
 	"fmt"
 	"testing"
+
+	"github.com/Viking2012/goraynor/src/structs"
 )
 
-var RawRecords = []PriceRecord{
+var RawRecords = []structs.PriceRecord{
 	{Uuid: 0, ProductID: "bed_bath_table:8", CustomerID: "15df0", PurchaseDate: QuickParse("2017-02-28"), DocumentNumber: 100000000, DocumentLineNumber: 1, Price: 101.14},
 	{Uuid: 1, ProductID: "bed_bath_table:8", CustomerID: "f4c13", PurchaseDate: QuickParse("2017-02-28"), DocumentNumber: 100000100, DocumentLineNumber: 1, Price: 104.70},
 	{Uuid: 2, ProductID: "bed_bath_table:9", CustomerID: "0dc4b", PurchaseDate: QuickParse("2017-03-01"), DocumentNumber: 100000200, DocumentLineNumber: 1, Price: 101.14},
@@ -109,7 +111,7 @@ func verifyStringOrder(want, got []string) (bool, string, error) {
 
 func TestOrderByUuid(t *testing.T) {
 	want := []int64{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}
-	s := make([]PriceRecord, len(RawRecords))
+	s := make([]structs.PriceRecord, len(RawRecords))
 	copy(s, RawRecords)
 
 	OrderedBy(ByUuid).Sort(s)
@@ -132,7 +134,7 @@ func TestOrderByUuid(t *testing.T) {
 
 func TestOrderByProductID(t *testing.T) {
 	want := []string{"bed_bath_table:8", "bed_bath_table:8", "bed_bath_table:8", "bed_bath_table:8", "bed_bath_table:8", "bed_bath_table:8", "bed_bath_table:8", "bed_bath_table:8", "bed_bath_table:8", "bed_bath_table:8", "bed_bath_table:9", "bed_bath_table:9", "bed_bath_table:9", "bed_bath_table:9", "bed_bath_table:9", "bed_bath_table:9", "bed_bath_table:9", "bed_bath_table:9", "bed_bath_table:9", "bed_bath_table:9"}
-	s := make([]PriceRecord, len(RawRecords))
+	s := make([]structs.PriceRecord, len(RawRecords))
 	copy(s, RawRecords)
 
 	OrderedBy(ByProduct).Sort(s)
@@ -155,7 +157,7 @@ func TestOrderByProductID(t *testing.T) {
 
 func TestOrderByCustomerID(t *testing.T) {
 	want := []string{"0d554", "0dc4b", "15df0", "20dcb", "2ed85", "4ab4d", "5af63", "5af63", "6058d", "61e64", "679f8", "68fe3", "6d52f", "d5f2b", "d98e2", "d98e2", "d98e2", "f4c13", "f4c13", "f4c13"}
-	s := make([]PriceRecord, len(RawRecords))
+	s := make([]structs.PriceRecord, len(RawRecords))
 	copy(s, RawRecords)
 
 	OrderedBy(ByCustomer).Sort(s)
@@ -178,7 +180,7 @@ func TestOrderByCustomerID(t *testing.T) {
 
 func TestOrderByPurchaseDate(t *testing.T) {
 	want := []string{"2017-02-28", "2017-02-28", "2017-03-01", "2017-03-02", "2017-03-04", "2017-03-05", "2017-03-06", "2017-03-06", "2017-03-08", "2017-03-09", "2017-03-11", "2017-03-13", "2017-03-13", "2017-03-16", "2017-03-16", "2017-03-20", "2017-03-20", "2017-03-20", "2017-03-23", "2017-03-27"}
-	s := make([]PriceRecord, len(RawRecords))
+	s := make([]structs.PriceRecord, len(RawRecords))
 	copy(s, RawRecords)
 
 	OrderedBy(ByDate).Sort(s)
@@ -201,7 +203,7 @@ func TestOrderByPurchaseDate(t *testing.T) {
 
 func TestOrderByDocumentNumber(t *testing.T) {
 	want := []int64{100000000, 100000100, 100000200, 100000300, 100000400, 100000500, 100000600, 100000700, 100000800, 100000900, 100001000, 100001100, 100001200, 100001300, 100001400, 100001500, 100001600, 100001600, 100001700, 100001800}
-	s := make([]PriceRecord, len(RawRecords))
+	s := make([]structs.PriceRecord, len(RawRecords))
 	copy(s, RawRecords)
 
 	OrderedBy(ByDocumentNumber).Sort(s)
@@ -224,7 +226,7 @@ func TestOrderByDocumentNumber(t *testing.T) {
 
 func TestOrderByDocumentLineNumber(t *testing.T) {
 	want := []int64{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2}
-	s := make([]PriceRecord, len(RawRecords))
+	s := make([]structs.PriceRecord, len(RawRecords))
 	copy(s, RawRecords)
 
 	OrderedBy(ByDocumentLineNumber).Sort(s)
@@ -247,7 +249,7 @@ func TestOrderByDocumentLineNumber(t *testing.T) {
 
 func TestOrderByPrice(t *testing.T) {
 	want := []float64{101.14, 101.14, 101.14, 101.14, 101.14, 101.14, 101.14, 101.14, 101.14, 101.14, 101.18, 102.18, 104.7, 104.7, 104.7, 104.7, 106.23, 106.23, 106.23, 115.02}
-	s := make([]PriceRecord, len(RawRecords))
+	s := make([]structs.PriceRecord, len(RawRecords))
 	copy(s, RawRecords)
 
 	OrderedBy(ByPrice).Sort(s)
@@ -270,7 +272,7 @@ func TestOrderByPrice(t *testing.T) {
 
 func TestOrderByProductCustomerDocumentDatePrice(t *testing.T) {
 	want := []int64{8, 0, 4, 18, 9, 7, 3, 1, 6, 15, 2, 19, 11, 13, 5, 12, 10, 14, 16, 17}
-	s := make([]PriceRecord, len(RawRecords))
+	s := make([]structs.PriceRecord, len(RawRecords))
 	copy(s, RawRecords)
 
 	OrderedBy(ByProduct, ByCustomer, ByDate, ByDocumentNumber, ByDocumentLineNumber, ByPrice).Sort(s)
@@ -293,7 +295,7 @@ func TestOrderByProductCustomerDocumentDatePrice(t *testing.T) {
 
 func TestOrderByDocumentAndLineNumber(t *testing.T) {
 	want := []int64{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19}
-	s := make([]PriceRecord, len(RawRecords))
+	s := make([]structs.PriceRecord, len(RawRecords))
 	copy(s, RawRecords)
 
 	OrderedBy(ByDocumentNumber, ByDocumentLineNumber).Sort(s)
@@ -314,12 +316,12 @@ func TestOrderByDocumentAndLineNumber(t *testing.T) {
 	}
 }
 
-func TestQuickPrasePanics(t *testing.T) {
+func TestQuickParsePanics(t *testing.T) {
 	// No need to check whether `recover()` is nil. Just turn off the panic.
 	defer func() { recover() }()
 
 	QuickParse("abc")
 
-	// Never reaches here if `OtherFunctionThatPanics` panics.
+	// Never reaches here if `QuickParse` panics.
 	t.Errorf("did not panic")
 }
