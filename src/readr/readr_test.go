@@ -5,7 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Viking2012/goraynor/src/records"
+	"github.com/Viking2012/goraynor/src/structs"
+	"github.com/Viking2012/goraynor/src/utils"
 )
 
 // Reused testing variables
@@ -28,12 +29,12 @@ bed_bath_table:8,2ed85,2017-03-04,101.14
 		Price:              3,
 	}
 
-	priceRecords []records.PriceRecord = []records.PriceRecord{
-		{Uuid: 0, ProductID: "bed_bath_table:8", CustomerID: "15df0", PurchaseDate: records.QuickParse("2017-02-28"), DocumentNumber: 0, DocumentLineNumber: 0, Price: 101.14},
-		{Uuid: 1, ProductID: "bed_bath_table:8", CustomerID: "f4c13", PurchaseDate: records.QuickParse("2017-02-28"), DocumentNumber: 1, DocumentLineNumber: 1, Price: 104.70},
-		{Uuid: 2, ProductID: "bed_bath_table:9", CustomerID: "0dc4b", PurchaseDate: records.QuickParse("2017-03-01"), DocumentNumber: 2, DocumentLineNumber: 2, Price: 101.14},
-		{Uuid: 3, ProductID: "bed_bath_table:8", CustomerID: "d98e2", PurchaseDate: records.QuickParse("2017-03-02"), DocumentNumber: 3, DocumentLineNumber: 3, Price: 104.70},
-		{Uuid: 4, ProductID: "bed_bath_table:8", CustomerID: "2ed85", PurchaseDate: records.QuickParse("2017-03-04"), DocumentNumber: 4, DocumentLineNumber: 4, Price: 101.14},
+	priceRecords []structs.PriceRecord = []structs.PriceRecord{
+		{Uuid: 0, ProductID: "bed_bath_table:8", CustomerID: "15df0", PurchaseDate: utils.QuickParse("2017-02-28"), DocumentNumber: 0, DocumentLineNumber: 0, Price: 101.14},
+		{Uuid: 1, ProductID: "bed_bath_table:8", CustomerID: "f4c13", PurchaseDate: utils.QuickParse("2017-02-28"), DocumentNumber: 1, DocumentLineNumber: 1, Price: 104.70},
+		{Uuid: 2, ProductID: "bed_bath_table:9", CustomerID: "0dc4b", PurchaseDate: utils.QuickParse("2017-03-01"), DocumentNumber: 2, DocumentLineNumber: 2, Price: 101.14},
+		{Uuid: 3, ProductID: "bed_bath_table:8", CustomerID: "d98e2", PurchaseDate: utils.QuickParse("2017-03-02"), DocumentNumber: 3, DocumentLineNumber: 3, Price: 104.70},
+		{Uuid: 4, ProductID: "bed_bath_table:8", CustomerID: "2ed85", PurchaseDate: utils.QuickParse("2017-03-04"), DocumentNumber: 4, DocumentLineNumber: 4, Price: 101.14},
 	}
 
 	badLine [][]string = [][]string{

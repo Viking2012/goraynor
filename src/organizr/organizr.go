@@ -2,12 +2,9 @@ package organizr
 
 import (
 	"sort"
-	"time"
 
 	"github.com/Viking2012/goraynor/src/structs"
 )
-
-const layout = "2006-01-02"
 
 // implementation basics from https://pkg.go.dev/sort#example-package-SortKeys
 // lessFunc is the type of a "less" function that defines the ordering of its PurchaseRecord arguments.
@@ -105,12 +102,3 @@ var ByDate lessFunc = byDate
 var ByDocumentNumber lessFunc = byDocumentNumber
 var ByDocumentLineNumber lessFunc = byDocumentLineNumber
 var ByPrice lessFunc = byPrice
-
-// QuickParse simply reutrns a result of parsing a time string in YYYY-MM-DD format
-func QuickParse(dateString string) time.Time {
-	t, err := time.Parse(layout, dateString)
-	if err != nil {
-		panic(err)
-	}
-	return t
-}

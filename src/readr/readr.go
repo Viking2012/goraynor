@@ -6,7 +6,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/Viking2012/goraynor/src/records"
+	"github.com/Viking2012/goraynor/src/structs"
+	"github.com/Viking2012/goraynor/src/utils"
 )
 
 // FieldIndexMap provides a structure which enables readr to find data fields in the csv provided.
@@ -33,7 +34,7 @@ var DefaultFieldMap FieldIndexMap = FieldIndexMap{
 }
 
 // ParseCSV reads a csv at the given filepath and converts it to pricing records we can examine
-func ParseCSV(filepath string, headerRows int, fieldMap *FieldIndexMap) ([]records.PriceRecord, error) {
+func ParseCSV(filepath string, headerRows int, fieldMap *FieldIndexMap) ([]structs.PriceRecord, error) {
 	// if fieldMap was a nil pointer, then use the default map
 	if fieldMap == nil {
 		fieldMap = &DefaultFieldMap
@@ -41,25 +42,25 @@ func ParseCSV(filepath string, headerRows int, fieldMap *FieldIndexMap) ([]recor
 
 	// Price MUST be provided - without it, what are we running this for?
 	if fieldMap.Price < 0 {
-		return []records.PriceRecord{}, errors.New("Index for price must be provided")
+		return []structs.PriceRecord{}, errors.New("Index for price must be provided")
 	}
 
 	csvFile, err := os.Open(filepath)
 
 	if err != nil {
-		return []records.PriceRecord{}, err
+		return []structs.PriceRecord{}, err
 	}
 
 	r := csv.NewReader(csvFile)
 
 	lines, err := r.ReadAll()
 
-	var clean []records.PriceRecord
+	var clean []structs.PriceRecord
 
 	clean, err = parseLines(lines[headerRows:], fieldMap)
 
 	if err != nil {
-		return []records.PriceRecord{}, err
+		return []structs.PriceRecord{}, err
 	}
 
 	return clean, nil
@@ -85,36 +86,36 @@ func extractFloatField(record []string, givenIndex, i int) (float64, error) {
 }
 
 // parseLines allows for easier testing (can take an array of an array of strings from any source location)
-func parseLines(lines [][]string, fieldMap *FieldIndexMap) ([]records.PriceRecord, error) {
+func parseLines(lines [][]string, fieldMap *FieldIndexMap) ([]structs.PriceRecord, error) {
 	numLines := len(lines)
-	priceRecords := make([]records.PriceRecord, numLines)
+	priceRecords := make([]structs.PriceRecord, numLines)
 
 	for i := 0; i < numLines; i++ {
 		thisUuid, err := extractIntField(lines[i], fieldMap.UUID, i)
 		if err != nil {
-			return []records.PriceRecord{}, err
+			return []structs.PriceRecord{}, err
 		}
 
 		thisPrice, err := extractFloatField(lines[i], fieldMap.Price, i)
 		if err != nil {
-			return []records.PriceRecord{}, err
+			return []structs.PriceRecord{}, err
 		}
 
 		thisDoc, err := extractIntField(lines[i], fieldMap.DocumentNumber, i)
 		if err != nil {
-			return []records.PriceRecord{}, err
+			return []structs.PriceRecord{}, err
 		}
 
 		thisDocNum, err := extractIntField(lines[i], fieldMap.DocumentLineNumber, i)
 		if err != nil {
-			return []records.PriceRecord{}, err
+			return []structs.PriceRecord{}, err
 		}
 
-		priceRecords[i] = records.PriceRecord{
+		priceRecords[i] = structs.PriceRecord{
 			Uuid:               int64(thisUuid),
 			ProductID:          lines[i][fieldMap.ProductID],
 			CustomerID:         lines[i][fieldMap.CustomerID],
-			PurchaseDate:       records.QuickParse(lines[i][fieldMap.PurchaseDate]),
+			PurchaseDate:       utils.QuickParse(lines[i][fieldMap.PurchaseDate]),
 			Price:              thisPrice,
 			DocumentNumber:     int64(thisDoc),
 			DocumentLineNumber: int64(thisDocNum),

@@ -6,29 +6,30 @@ import (
 	"testing"
 
 	"github.com/Viking2012/goraynor/src/structs"
+	"github.com/Viking2012/goraynor/src/utils"
 )
 
 var RawRecords = []structs.PriceRecord{
-	{Uuid: 0, ProductID: "bed_bath_table:8", CustomerID: "15df0", PurchaseDate: QuickParse("2017-02-28"), DocumentNumber: 100000000, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 1, ProductID: "bed_bath_table:8", CustomerID: "f4c13", PurchaseDate: QuickParse("2017-02-28"), DocumentNumber: 100000100, DocumentLineNumber: 1, Price: 104.70},
-	{Uuid: 2, ProductID: "bed_bath_table:9", CustomerID: "0dc4b", PurchaseDate: QuickParse("2017-03-01"), DocumentNumber: 100000200, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 3, ProductID: "bed_bath_table:8", CustomerID: "d98e2", PurchaseDate: QuickParse("2017-03-02"), DocumentNumber: 100000300, DocumentLineNumber: 1, Price: 104.70},
-	{Uuid: 4, ProductID: "bed_bath_table:8", CustomerID: "2ed85", PurchaseDate: QuickParse("2017-03-04"), DocumentNumber: 100000400, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 5, ProductID: "bed_bath_table:9", CustomerID: "6058d", PurchaseDate: QuickParse("2017-03-05"), DocumentNumber: 100000500, DocumentLineNumber: 1, Price: 106.23},
-	{Uuid: 6, ProductID: "bed_bath_table:8", CustomerID: "f4c13", PurchaseDate: QuickParse("2017-03-06"), DocumentNumber: 100000600, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 7, ProductID: "bed_bath_table:8", CustomerID: "d5f2b", PurchaseDate: QuickParse("2017-03-06"), DocumentNumber: 100000700, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 8, ProductID: "bed_bath_table:8", CustomerID: "0d554", PurchaseDate: QuickParse("2017-03-08"), DocumentNumber: 100000800, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 9, ProductID: "bed_bath_table:8", CustomerID: "6d52f", PurchaseDate: QuickParse("2017-03-09"), DocumentNumber: 100000900, DocumentLineNumber: 1, Price: 115.02},
-	{Uuid: 10, ProductID: "bed_bath_table:9", CustomerID: "679f8", PurchaseDate: QuickParse("2017-03-11"), DocumentNumber: 100001000, DocumentLineNumber: 1, Price: 106.23},
-	{Uuid: 11, ProductID: "bed_bath_table:9", CustomerID: "5af63", PurchaseDate: QuickParse("2017-03-13"), DocumentNumber: 100001100, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 12, ProductID: "bed_bath_table:9", CustomerID: "61e64", PurchaseDate: QuickParse("2017-03-13"), DocumentNumber: 100001200, DocumentLineNumber: 1, Price: 104.70},
-	{Uuid: 13, ProductID: "bed_bath_table:9", CustomerID: "5af63", PurchaseDate: QuickParse("2017-03-16"), DocumentNumber: 100001300, DocumentLineNumber: 1, Price: 102.18},
-	{Uuid: 14, ProductID: "bed_bath_table:9", CustomerID: "68fe3", PurchaseDate: QuickParse("2017-03-16"), DocumentNumber: 100001400, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 15, ProductID: "bed_bath_table:8", CustomerID: "f4c13", PurchaseDate: QuickParse("2017-03-20"), DocumentNumber: 100001500, DocumentLineNumber: 1, Price: 104.70},
-	{Uuid: 16, ProductID: "bed_bath_table:9", CustomerID: "d98e2", PurchaseDate: QuickParse("2017-03-20"), DocumentNumber: 100001600, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 17, ProductID: "bed_bath_table:9", CustomerID: "d98e2", PurchaseDate: QuickParse("2017-03-20"), DocumentNumber: 100001600, DocumentLineNumber: 2, Price: 101.18},
-	{Uuid: 18, ProductID: "bed_bath_table:8", CustomerID: "4ab4d", PurchaseDate: QuickParse("2017-03-23"), DocumentNumber: 100001700, DocumentLineNumber: 1, Price: 101.14},
-	{Uuid: 19, ProductID: "bed_bath_table:9", CustomerID: "20dcb", PurchaseDate: QuickParse("2017-03-27"), DocumentNumber: 100001800, DocumentLineNumber: 1, Price: 106.23},
+	{Uuid: 0, ProductID: "bed_bath_table:8", CustomerID: "15df0", PurchaseDate: utils.QuickParse("2017-02-28"), DocumentNumber: 100000000, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 1, ProductID: "bed_bath_table:8", CustomerID: "f4c13", PurchaseDate: utils.QuickParse("2017-02-28"), DocumentNumber: 100000100, DocumentLineNumber: 1, Price: 104.70},
+	{Uuid: 2, ProductID: "bed_bath_table:9", CustomerID: "0dc4b", PurchaseDate: utils.QuickParse("2017-03-01"), DocumentNumber: 100000200, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 3, ProductID: "bed_bath_table:8", CustomerID: "d98e2", PurchaseDate: utils.QuickParse("2017-03-02"), DocumentNumber: 100000300, DocumentLineNumber: 1, Price: 104.70},
+	{Uuid: 4, ProductID: "bed_bath_table:8", CustomerID: "2ed85", PurchaseDate: utils.QuickParse("2017-03-04"), DocumentNumber: 100000400, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 5, ProductID: "bed_bath_table:9", CustomerID: "6058d", PurchaseDate: utils.QuickParse("2017-03-05"), DocumentNumber: 100000500, DocumentLineNumber: 1, Price: 106.23},
+	{Uuid: 6, ProductID: "bed_bath_table:8", CustomerID: "f4c13", PurchaseDate: utils.QuickParse("2017-03-06"), DocumentNumber: 100000600, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 7, ProductID: "bed_bath_table:8", CustomerID: "d5f2b", PurchaseDate: utils.QuickParse("2017-03-06"), DocumentNumber: 100000700, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 8, ProductID: "bed_bath_table:8", CustomerID: "0d554", PurchaseDate: utils.QuickParse("2017-03-08"), DocumentNumber: 100000800, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 9, ProductID: "bed_bath_table:8", CustomerID: "6d52f", PurchaseDate: utils.QuickParse("2017-03-09"), DocumentNumber: 100000900, DocumentLineNumber: 1, Price: 115.02},
+	{Uuid: 10, ProductID: "bed_bath_table:9", CustomerID: "679f8", PurchaseDate: utils.QuickParse("2017-03-11"), DocumentNumber: 100001000, DocumentLineNumber: 1, Price: 106.23},
+	{Uuid: 11, ProductID: "bed_bath_table:9", CustomerID: "5af63", PurchaseDate: utils.QuickParse("2017-03-13"), DocumentNumber: 100001100, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 12, ProductID: "bed_bath_table:9", CustomerID: "61e64", PurchaseDate: utils.QuickParse("2017-03-13"), DocumentNumber: 100001200, DocumentLineNumber: 1, Price: 104.70},
+	{Uuid: 13, ProductID: "bed_bath_table:9", CustomerID: "5af63", PurchaseDate: utils.QuickParse("2017-03-16"), DocumentNumber: 100001300, DocumentLineNumber: 1, Price: 102.18},
+	{Uuid: 14, ProductID: "bed_bath_table:9", CustomerID: "68fe3", PurchaseDate: utils.QuickParse("2017-03-16"), DocumentNumber: 100001400, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 15, ProductID: "bed_bath_table:8", CustomerID: "f4c13", PurchaseDate: utils.QuickParse("2017-03-20"), DocumentNumber: 100001500, DocumentLineNumber: 1, Price: 104.70},
+	{Uuid: 16, ProductID: "bed_bath_table:9", CustomerID: "d98e2", PurchaseDate: utils.QuickParse("2017-03-20"), DocumentNumber: 100001600, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 17, ProductID: "bed_bath_table:9", CustomerID: "d98e2", PurchaseDate: utils.QuickParse("2017-03-20"), DocumentNumber: 100001600, DocumentLineNumber: 2, Price: 101.18},
+	{Uuid: 18, ProductID: "bed_bath_table:8", CustomerID: "4ab4d", PurchaseDate: utils.QuickParse("2017-03-23"), DocumentNumber: 100001700, DocumentLineNumber: 1, Price: 101.14},
+	{Uuid: 19, ProductID: "bed_bath_table:9", CustomerID: "20dcb", PurchaseDate: utils.QuickParse("2017-03-27"), DocumentNumber: 100001800, DocumentLineNumber: 1, Price: 106.23},
 }
 
 func verifyIntegerOrder(want, got []int64) (bool, string, error) {
@@ -187,7 +188,7 @@ func TestOrderByPurchaseDate(t *testing.T) {
 
 	r := make([]string, len(s))
 	for i := range r {
-		r[i] = s[i].PurchaseDate.Format(layout)
+		r[i] = s[i].PurchaseDate.Format("2006-01-02")
 	}
 
 	same, outputString, err := verifyStringOrder(want, r)
@@ -314,14 +315,4 @@ func TestOrderByDocumentAndLineNumber(t *testing.T) {
 	if !same {
 		t.Errorf(outputString)
 	}
-}
-
-func TestQuickParsePanics(t *testing.T) {
-	// No need to check whether `recover()` is nil. Just turn off the panic.
-	defer func() { recover() }()
-
-	QuickParse("abc")
-
-	// Never reaches here if `QuickParse` panics.
-	t.Errorf("did not panic")
 }
