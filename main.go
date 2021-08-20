@@ -4,11 +4,10 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"sync"
-	"time"
 
-	data "github.com/Viking2012/goraynor/data/tickers"
+	"github.com/Viking2012/goraynor/src/countr"
 	"github.com/Viking2012/goraynor/src/getr"
+	"github.com/Viking2012/goraynor/src/quantilr"
 )
 
 // const randSeed uint64 = 123456
@@ -107,30 +106,49 @@ import (
 // 	{this: 2, next: 1},
 // }
 
-func downloadTickers(saveDir string) error {
-	var wg sync.WaitGroup
-
-	for _, ticker := range data.TICKERS {
-		wg.Add(1)
-		go downloadTicker(ticker, saveDir, &wg)
-	}
-
-	wg.Wait()
-	return nil
-}
-
-func downloadTicker(ticker, saveDir string, wg *sync.WaitGroup) {
-	defer wg.Done()
-	fmt.Printf("getting %5s\n", ticker)
-	getr.DownloadMutualFundData(ticker, saveDir)
-}
-
 func main() {
-	today := time.Now().Format("20060102")
+	today := "20210819" // otherwise, time.Now().Format("20060102")
 	saveDir := filepath.Join(".", "data", today)
 	_ = os.Mkdir(saveDir, os.ModeDir) // TODO(ajo): lazy ignoring of errors. Fix This!
 
-	_ = downloadTickers(saveDir)
+	// err := getr.DownloadTickers(saveDir)
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	pRecords, err := getr.GetTickers(saveDir)
+	if err != nil {
+		panic(err)
+	}
+
+	var allPrices []float64
+	for _, data := range *pRecords {
+		records := *data
+		// lastRecord := records[len(records)-1]
+		for i := 0; i < len(records); i++ {
+			allPrices = append(allPrices, records[i].PriceReturn)
+		}
+		// fmt.Printf("\tfor ticker: %s, got %5d monthly records (%v)\n", ticker, len(*data), lastRecord)
+	}
+
+	c := countr.Count(allPrices)
+	d, err := quantilr.NewDeciles(c, true)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("All Prices\n%v\n", d.Pairs)
+	pRecords.SetDeciles(&d)
+
+	for ticker, data := range *pRecords {
+		fmt.Printf("\tfor ticker: %s, got %5d monthly records and returns:\n", ticker, len(*data))
+		records := *data
+		for i := 0; i < len(records); i++ {
+			thisRecord := records[i]
+			if thisRecord.DecileOfPrice != 0 {
+				fmt.Printf("\t\t(%v)\n", thisRecord)
+			}
+		}
+	}
 
 	// raw, err := readr.ParseCSV("./test/test_data.csv", 1, &readr.DefaultFieldMap)
 	// if err != nil {
